@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Warehouse;
+use App\Models\Berita_acara;
+use App\Models\SuratJalan;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,12 +30,21 @@ class WarehouseController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
 
+        if($request->has('search')){
+            $warehouses = Warehouse::where('no_keputusan_pengadilan', 'LIKE', "%$request->search%")
+            ->orWhere('pihak_yang_menitipkan', 'LIKE', "%$request->search%")
+            ->orWhere('nama_pemilik_barang', 'LIKE', "%$request->search%")
+            ->orWhere('nama_barang', 'LIKE', "%$request->search%")
+            ->paginate(10);
+        }else{
+            $warehouses = Warehouse::latest()->paginate(10);
+        }
 
         //get warehouse
-        $warehouses = Warehouse::latest()->paginate(5);
+        
 
         //render view with warehouse
         return view('warehouses.index', compact('warehouses'));
@@ -84,7 +95,11 @@ class WarehouseController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('warehouse.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('warehouse.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        } else {
+            return redirect()->route('warehouse2.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        }
     }
     /**
      * show
@@ -173,26 +188,39 @@ class WarehouseController extends Controller
         }
 
         //redirect to index
-        return redirect()->route('warehouse.index')->with(['success' => 'Data Berhasil Diubah!']);
-    }
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('warehouse.index')->with(['success' => 'Data Berhasil Diubah!']);
+        } else {
+            return redirect()->route('warehouse2.index')->with(['success' => 'Data Berhasil Diubah!']);
+        }    }
     /**
      * destroy
      *
      * @param  mixed $post
      * @return void
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(Request $request,$id): RedirectResponse
     {
+        $request->validate([
+            'no_keputusan_pengadilan' => 'required',
+        ]);
+
         //get warehouse by ID
         $warehouse = Warehouse::findOrFail($id);
+        $ba = SuratJalan::where('no_keputusan_pengadilan', $request->no_keputusan_pengadilan)->first();
 
         //delete image
         Storage::delete('public/warehouse/' . $warehouse->foto_barang);
 
         //delete warehouse
         $warehouse->delete();
+        $ba?->delete();
 
         //redirect to index
-        return redirect()->route('warehouse.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('warehouse.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } else {
+            return redirect()->route('warehouse2.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

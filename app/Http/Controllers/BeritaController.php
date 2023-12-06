@@ -71,8 +71,12 @@ class BeritaController extends Controller
             ]
         );
         
+        if(auth()->user()->type == "admin"){
+            return redirect()->route('berita_acara.cetak', ['no_keputusan_pengadilan' => $no_keputusan_pengadilan]);
+        }else{
+            return redirect()->route('berita_acara2.cetak', ['no_keputusan_pengadilan' => $no_keputusan_pengadilan]);
+        }
 
-        return redirect()->route('berita_acara.cetak', ['no_keputusan_pengadilan' => $no_keputusan_pengadilan]);
     }
 
     public function cetak(Request $request)

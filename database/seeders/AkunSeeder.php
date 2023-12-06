@@ -4,16 +4,14 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
-class CreateUsersSeeder extends Seeder
+class AkunSeeder extends Seeder
 {
-     /**
+    /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run(): void
+    public function run()
     {
         $users = [
             [
@@ -52,9 +50,8 @@ class CreateUsersSeeder extends Seeder
                'password'=> bcrypt('12345678'),
             ],
         ];
-    
-        foreach ($users as $key => $user) {
-            User::create($user);
-        }
+
+        // Memasukkan data ke dalam tabel 'users'
+        DB::table('users')->insert($users);
     }
 }

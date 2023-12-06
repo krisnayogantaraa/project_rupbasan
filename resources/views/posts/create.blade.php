@@ -3,7 +3,12 @@
 @section('content')
 <p class="text-5xl mb-3 text-gray-900 dark:text-white">Daftar Permohonan Baru</p>
 
-<form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+<form @if(auth()->user()->type == "admin")
+    action="{{ route('posts.store') }}"
+    @else
+    action="{{ route('posts2.store') }}"
+    @endif
+    method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="grid gap-6 mb-6 md:grid-cols-2">

@@ -13,14 +13,14 @@ class UserAccess
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next, ...$roles)
+    public function handle($request, Closure $next, $type)
     {
         if (!auth()->check()) {
             // Pengguna belum login, arahkan ke halaman login
             return redirect()->route('login');
         }
     
-        $allowedRoles = collect($roles);
+        $allowedRoles = collect($type);
     
         if (!$allowedRoles->contains(auth()->user()->type)) {
             // Pengguna mencoba mengakses rute yang tidak sesuai, arahkan ke rute sesuai perannya
@@ -28,11 +28,13 @@ class UserAccess
                 case 'admin':
                     return redirect()->route('posts.index');
                 case 'operator':
-                    return redirect()->route('posts.index');
+                    return redirect()->route('posts2.index');
                 case 'gudang':
-                    return redirect()->route('warehouse.index');
+                    return redirect()->route('warehouse2.index');
+                case 'ekspedisi':
+                    return redirect()->route('ekspedisi2.index');
                 default:
-                    return redirect()->route('home');
+                    return redirect()->route('posts.index');
             }
         }
     

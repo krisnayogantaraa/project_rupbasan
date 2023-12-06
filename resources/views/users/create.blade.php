@@ -26,6 +26,7 @@
                 <option value="1">Admin</option>
                 <option value="2">Operator</option>
                 <option value="3">gudang</option>
+                <option value="4">ekspedisi</option>
             </select>
         </div>
         <div>

@@ -28,14 +28,23 @@
                 <option selected value="1">Admin</option>
                 <option value="2">Operator</option>
                 <option value="3">gudang</option>
+                <option value="4">ekspedisi</option>
                 @elseif($User->type == "operator")
                 <option value="1">Admin</option>
                 <option selected value="2">Operator</option>
+                <option value="2">Operator</option>
+                <option value="3">gudang</option>
+                <option value="4">ekspedisi</option>
+                @elseif($User->type == "gudang")
+                <option value="1">Admin</option>
+                <option value="2">Operator</option>
+                <option selected value="3">gudang</option>
+                <option value="4">ekspedisi</option>
+                @elseif($User->type == "ekspedisi")
                 <option value="1">Admin</option>
                 <option value="2">Operator</option>
                 <option value="3">gudang</option>
-                @elseif($User->type == "gudang")
-                <option selected value="3">gudang</option>
+                <option selected value="4">ekspedisi</option>
                 @endif
             </select>
         </div>

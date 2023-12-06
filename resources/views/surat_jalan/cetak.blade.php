@@ -18,7 +18,7 @@ $tahun = $SuratJalan->created_at->format('Y');
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="../../css/styles.css">
     <style>
         /* Gaya untuk cetak */
         @media print {
@@ -60,7 +60,7 @@ $tahun = $SuratJalan->created_at->format('Y');
 
         <div class="pt-4">
             <div class="font-bold text-center text-base">
-                <div>BERITA ACARA PENGELUARAN BASAN DAN/BARAN</div>
+                <div>SURAT JALAN PENGANTARAN BASAN</div>
                 <div>Nomor : RBS1/{{ $SuratJalan->id }}/Kb/PAS.35/{{$bulan}}/{{$tahun}}</div>
             </div>
 
@@ -132,11 +132,18 @@ $tahun = $SuratJalan->created_at->format('Y');
                 </div>
 
                 <div class="mt-8 w-52 float-right mx-auto" style="line-height: 1.2;">
-                    <div><i>Bagian Gudang</i></div>
+                    <div><i>Koordinator Gudang</i></div>
                     <div class="w-24 h-24"></div>
-                    <div>(&nbsp;kepala gudang&nbsp;)</div>
+                    <div>(&nbsp;             &nbsp;)</div>
+                </div>
+                <div class="mt-8 w-52 float-right mx-auto" style="line-height: 1.2;">
+                    <div><i>Kepala Adpel</i></div>
+                    <div class="w-24 h-24"></div>
+                    <div>(&nbsp;             &nbsp;)</div>
                 </div>
             </div>
+                    
+
         </div>
     </div>
 

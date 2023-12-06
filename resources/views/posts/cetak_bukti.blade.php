@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
+    <title>Cetak Bukti</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="../../css/styles.css">
     <style>
         /* Gaya untuk cetak */
         @media print {
@@ -111,7 +111,7 @@
             </div>
             <div class="mt-20 text-center w-52 float-right">
                 <div>Bandung, {{ date('d-m-Y', strtotime($post->created_at)) }}</div>
-                <div>Bag Adpel</div>
+                <div>Staf Administrasi</div>
                 <div class="w-24 h-24"></div>
                 <div>(............................................)</div>
             </div>

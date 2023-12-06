@@ -24,20 +24,25 @@ class DaftarController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     //
     /**
      * index
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
 
 
-        //get users
-        $users = User::latest()->paginate(5);
-        
+        if ($request->has('search')) {
+            $users = User::where('name', 'LIKE', "%$request->search%")
+                ->orWhere('email', 'LIKE', "%$request->search%")
+                ->orWhere('nip', 'LIKE', "%$request->search%")
+                ->paginate(10);
+        } else {
+            $users = User::latest()->paginate(10);
+        }
 
         //render view with users
         return view('users.index', compact('users'));
@@ -65,7 +70,7 @@ class DaftarController extends Controller
         $this->validate($request, [
             'name'     => 'required|min:5|max:255',
             'nip'     => 'required|min:5|max:255',
-            'type'     => 'required|min:5|max:255',
+            'type'     => 'required|min:1|max:255',
             'email'     => 'required|min:5|max:255|unique:users',
             'password'    => 'required|min:8',
         ]);
@@ -112,7 +117,7 @@ class DaftarController extends Controller
         // Validasi input
         $rules = [
             'name'     => 'required|min:5|max:255',
-            'nip'      => 'required|min:5|max:255',
+            'nip'      => 'required|min:5|max:255|unique:users,email,' . ($id ?? 'NULL'),
             'type'     => 'required|max:255',
             'email'    => 'required|min:5|max:255|unique:users,email,' . ($id ?? 'NULL'),
             'password' => 'nullable|min:8',

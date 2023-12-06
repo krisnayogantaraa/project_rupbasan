@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berita_acara;
 use App\Models\Post;
 use App\Models\Warehouse;
 use Illuminate\View\View;
@@ -28,15 +29,23 @@ class PostController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
 
+        if ($request->has('search')) {
+            $posts = Post::where('no_keputusan_pengadilan', 'LIKE', "%$request->search%")
+                ->orWhere('status_pengajuan', 'LIKE', "%$request->search%")
+                ->orWhere('nama', 'LIKE', "%$request->search%")
+                ->orWhere('instansi', 'LIKE', "%$request->search%")
+                ->paginate(1);
+        } else {
+            $posts = Post::latest()->paginate(1);
+        }
 
         //get posts
-        $posts = Post::latest()->paginate(5);
-
+        $ba = Berita_Acara::latest();
         //render view with posts
-        return view('posts.index', compact('posts'));
+        return view('posts.index', compact('posts', 'ba'));
     }
 
     /**
@@ -47,76 +56,6 @@ class PostController extends Controller
     public function create(): View
     {
         return view('posts.create');
-    }
-
-    /**
-     * tambah
-     *
-     * @param  mixed $request
-     * @return RedirectResponse
-     */
-    public function tambah(Request $request): RedirectResponse
-    {
-        //validate form
-        $this->validate($request, [
-            'no_keputusan_pengadilan'     => 'required|min:5',
-            'status_pengajuan'     => 'required|min:5',
-            'nama'     => 'required|min:5',
-            'instansi'    => 'required|min:3',
-            'alamat'     => 'required|min:5',
-            'no_ktp'     => 'required|min:5',
-            'no_telp'     => 'required|min:5',
-            'file1'     => 'required|mimes:pdf,xlxs,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg|max:2048',
-            'file2'     => 'required|mimes:pdf,xlxs,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg|max:2048',
-            'file3'     => 'required|mimes:pdf,xlxs,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg|max:2048',
-            'file4'     => 'required|mimes:pdf,xlxs,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg|max:2048',
-            'file5'    => 'sometimes|mimes:pdf,xlxs,xlx,docx,doc,csv,txt,png,gif,jpg,jpeg|max:2048',
-        ]);
-
-        //upload file 1
-        $file1 = $request->file('file1');
-        $file1->storeAs('public/posts', $file1->hashName());
-
-        //upload file 2
-        $file2 = $request->file('file2');
-        $file2->storeAs('public/posts', $file2->hashName());
-
-        //upload file 3
-        $file3 = $request->file('file3');
-        $file3->storeAs('public/posts', $file3->hashName());
-
-        //upload file 4
-        $file4 = $request->file('file4');
-        $file4->storeAs('public/posts', $file4->hashName());
-
-        if ($request->hasFile('file5')) {
-            $file5 = $request->file('file5');
-            $file5->storeAs('public/posts', $file5->hashName());
-            // Lakukan sesuatu dengan file yang diunggah (misalnya, simpan nama file ke database)
-            $file5Path = $file5->hashName();
-        } else {
-            // Jika file5 tidak diunggah, atur $file5Path ke null atau nilai default lainnya
-            $file5Path = null; // atau sesuai kebutuhan
-        }
-
-        //create post
-        Post::create([
-            'file1'     => $file1->hashName(),
-            'file2'     => $file2->hashName(),
-            'file3'     => $file3->hashName(),
-            'file4'     => $file4->hashName(),
-            'file5'     => $file5Path,
-            'no_keputusan_pengadilan'      => $request->no_keputusan_pengadilan,
-            'status_pengajuan'      => $request->status_pengajuan,
-            'nama'      => $request->nama,
-            'instansi'      => $request->instansi,
-            'alamat'    => $request->alamat,
-            'no_ktp'    => $request->no_ktp,
-            'no_telp'    => $request->no_telp,
-        ]);
-
-        //redirect to index
-        return redirect()->route('welcome')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
     /**
@@ -186,7 +125,11 @@ class PostController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        } else {
+            return redirect()->route('posts2.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        }
     }
 
     /**
@@ -325,7 +268,11 @@ class PostController extends Controller
         }
 
         $post->save(); // Simpan model
-        return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Diubah!']);
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Diubah!']);
+        } else {
+            return redirect()->route('posts2.index')->with(['success' => 'Data Berhasil Diubah!']);
+        }
     }
 
     /**
@@ -334,10 +281,14 @@ class PostController extends Controller
      * @param  mixed $post
      * @return void
      */
-    public function destroy($id): RedirectResponse
+    public function destroy(Request $request, $id): RedirectResponse
     {
+        $request->validate([
+            'no_keputusan_pengadilan' => 'required',
+        ]);
         //get post by ID
         $post = Post::findOrFail($id);
+        $ba = Berita_acara::where('no_keputusan_pengadilan', $request->no_keputusan_pengadilan)->first();
 
         //delete file
         Storage::delete('public/posts/' . $post->file1);
@@ -348,8 +299,14 @@ class PostController extends Controller
 
         //delete post
         $post->delete();
+        $ba?->delete();
+
 
         //redirect to index
-        return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('posts.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        } else {
+            return redirect()->route('posts2.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

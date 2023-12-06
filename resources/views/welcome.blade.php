@@ -5,22 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Welcome</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css','resources/js/app.js'])
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 
 <body class="bg-gray-50">
     @if (Route::has('login'))
     <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
         @auth
-        <a href="{{ url('/home') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
+        <a href="{{ route('posts.index') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Home</a>
         @else
         <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
 
@@ -32,7 +31,7 @@
         <div class="container mt-2 mx-auto" style="width:50%;">
             <div class="card border-1 shadow-sm rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-800 p-4">
                 <p class="text-5xl mb-3 text-gray-900 dark:text-white">Ajukan Permohonan Baru</p>
-                <form action="{{ route('posts.tambah') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('pengajuan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="grid gap-6 mb-6 md:grid-cols-2">

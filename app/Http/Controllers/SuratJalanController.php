@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Warehouse;
 use App\Models\SuratJalan;
+use App\Models\Ekspedisi;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -62,6 +63,9 @@ class SuratJalanController extends Controller
             'tgl_pengiriman' => 'required',
         ]);
 
+        Ekspedisi::updateOrCreate(
+            ['no_keputusan_pengadilan' => $request->no_keputusan_pengadilan],
+        );
         SuratJalan::updateOrCreate(
             ['no_keputusan_pengadilan' => $request->no_keputusan_pengadilan],
             [
@@ -75,7 +79,11 @@ class SuratJalanController extends Controller
         );
 
         // Setelah menyimpan, arahkan ke rute cetak
-        return redirect()->route('surat_jalan.cetak', ['no_keputusan_pengadilan' => $no_keputusan_pengadilan]);
+        if (auth()->user()->type == "admin") {
+            return redirect()->route('surat_jalan.cetak', ['no_keputusan_pengadilan' => $no_keputusan_pengadilan]);
+        } else {
+            return redirect()->route('surat_jalan2.cetak', ['no_keputusan_pengadilan' => $no_keputusan_pengadilan]);
+        }
     }
 
 

@@ -121,7 +121,7 @@ $formatted_date = date('d F Y', $timestamp);
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="../../css/styles.css">
     <style>
         /* Gaya untuk cetak */
         @media print {

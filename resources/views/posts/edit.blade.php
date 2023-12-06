@@ -3,7 +3,12 @@
 @section('content')
 <p class="text-5xl mb-3 text-gray-900 dark:text-white">Edit Data</p>
 
-<form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+<form @if(auth()->user()->type == "admin")
+    action="{{ route('posts.update', $post->id) }}"
+    @else
+    action="{{ route('posts2.update', $post->id) }}"
+    @endif
+    method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
