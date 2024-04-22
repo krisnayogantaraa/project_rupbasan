@@ -4,11 +4,11 @@ MANUAL :
 2. setting env 
 3. composer create
 4. rm -R public/storage
-5. php artisan migrate
-6. php artisan migrate:fresh --seed --seeder=UserSeeder
-7. php artisan storage:link
-8. node install
-9. php artisan serve
+5. php artisan migrate:fresh --seed --seeder=AkunSeeder
+6. php artisan storage:link
+7. node install
+8. php artisan serve
+9. npm run dev
 
 
 ALURNYA:
