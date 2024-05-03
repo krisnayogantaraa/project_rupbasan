@@ -4,7 +4,7 @@ MANUAL :
 2. setting env 
 3. composer create
 4. rm -R public/storage
-5. php artisan migrate:fresh --seed --seeder=AkunSeeder
+5. php artisan migrate --seed --seeder=AkunSeeder
 6. php artisan storage:link
 7. node install
 8. php artisan serve
