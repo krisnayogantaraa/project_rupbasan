@@ -111,7 +111,7 @@ class PemeliharaanController extends Controller
         if (auth()->user()->type == "admin") {
             return redirect()->route('pemeliharaan.index')->with(['success' => 'Data Berhasil Disimpan!']);
         } else {
-            return redirect()->route('posts2.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            return redirect()->route('pemeliharaan2.index')->with(['success' => 'Data Berhasil Disimpan!']);
         }
     }
 
@@ -220,7 +220,7 @@ class PemeliharaanController extends Controller
         if (auth()->user()->type == "admin") {
             return redirect()->route('pemeliharaan.index')->with(['success' => 'Data Berhasil Diubah!']);
         } else {
-            return redirect()->route('posts2.index')->with(['success' => 'Data Berhasil Diubah!']);
+            return redirect()->route('pemeliharaan2.index')->with(['success' => 'Data Berhasil Diubah!']);
         }
     }
 
@@ -243,7 +243,7 @@ class PemeliharaanController extends Controller
         if (auth()->user()->type == "admin") {
             return redirect()->route('pemeliharaan.index')->with(['success' => 'Data Berhasil Dihapus!']);
         } else {
-            return redirect()->route('posts2.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return redirect()->route('pemeliharaan2.index')->with(['success' => 'Data Berhasil Dihapus!']);
         }
     }
 }

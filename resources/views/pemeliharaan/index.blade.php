@@ -2,14 +2,6 @@
 
 @section('content')
 <p class="text-5xl mb-3 dark:text-white">Daftar Riwayat Pemeliharaan</p>
-<a @if(auth()->user()->type == "admin")
-    href="{{ route('posts.create') }}"
-    @else
-    href="{{ route('posts2.create') }}"
-    @endif
-    >
-    <button type="button" class="focus:outline-none text-white font-medium rounded-lg text-lg px-5 py-2.5 me-2 mb-2 bg-green-600 hover:bg-green-700 focus:ring-green-800 w-56">Cetak Laporan</button>
-</a>
 
 <div>
     <form class="w-48 mb-3 float-right" @if(auth()->user()->type == "admin")
