@@ -15,7 +15,7 @@
     <form class="w-48 mb-3 float-right" @if(auth()->user()->type == "admin")
         action="/pemeliharaan"
         @else
-        action="/posts2"
+        action="/pemeliharaan2"
         @endif
         method="get">
         <div class="flex">
@@ -137,13 +137,13 @@
                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" @if(auth()->user()->type == "admin")
                         action="{{ route('pemeliharaan.destroy', $pemeliharaan->id) }}"
                         @else
-                        action="{{ route('posts2.destroy', $pemeliharaan->id) }}"
+                        action="{{ route('pemeliharaan2.destroy', $pemeliharaan->id) }}"
                         @endif
                         method="POST">
                         @if(auth()->user()->type == "admin")
                         <a href="{{ route('pemeliharaan.show', $pemeliharaan->id) }}">
                             @else
-                            <a href="{{ route('warehouse2.show', $pemeliharaan->id) }}">
+                            <a href="{{ route('pemeliharaan2.show', $pemeliharaan->id) }}">
                                 @endif
                                 <button data-popover-target="popover-show{{$pemeliharaan->id}}" type="button" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4  font-medium rounded-lg text-sm px-2  py-2.5 me-2 mb-2 focus:ring-yellow-900  w-11 h-11">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 mx-auto" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -154,7 +154,7 @@
                             <a @if(auth()->user()->type == "admin")
                                 href="{{ route('pemeliharaan.edit', $pemeliharaan->id) }}"
                                 @else
-                                href="{{ route('posts2.edit', $pemeliharaan->id) }}"
+                                href="{{ route('pemeliharaan2.edit', $pemeliharaan->id) }}"
                                 @endif
                                 >
                                 <button data-popover-target="popover-edit{{$pemeliharaan->id}}" type="button" class="text-white focus:ring-4 font-medium rounded-lg text-sm px-2  py-2.5 me-2 mb-2 bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-blue-800  w-11 h-11">

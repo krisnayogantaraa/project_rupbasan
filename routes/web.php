@@ -92,6 +92,8 @@ Route::middleware(['auth', 'user-access:gudang'])->group(function () {
     Route::get('/surat_jalan2/cetak', [SuratJalanController::class, 'cetak'])->name('surat_jalan2.cetak');
 
     Route::resource('/warehouse2', \App\Http\Controllers\WarehouseController::class);
+    Route::resource('/pemeliharaan2', \App\Http\Controllers\PemeliharaanController::class);
+    Route::get('/pemeliharaan2/create/{id_barang}', [\App\Http\Controllers\PemeliharaanController::class, 'create'])->name('pemeliharaan2.create');
 });
 
 /*------------------------------------------

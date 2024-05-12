@@ -6,7 +6,7 @@
 <form @if(auth()->user()->type == "admin")
     action="{{ route('pemeliharaan.update', $pemeliharaan->id) }}"
     @else
-    action="{{ route('posts2.update', $pemeliharaan->id) }}"
+    action="{{ route('pemeliharaan2.update', $pemeliharaan->id) }}"
     @endif
     method="POST" enctype="multipart/form-data">
     @csrf

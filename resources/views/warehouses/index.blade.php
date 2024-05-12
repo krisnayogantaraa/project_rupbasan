@@ -120,7 +120,7 @@
                                     @if(auth()->user()->type == "admin")
                                     <a href="{{ route('pemeliharaan.create', ['id_barang' => $warehouse->id]) }}">
                                         @else
-                                        <a href="{{ route('surat_jalan2.create', ['no_keputusan_pengadilan' => $warehouse->no_keputusan_pengadilan]) }}">
+                                        <a href="{{ route('pemeliharaan2.create', ['id_barang' => $warehouse->id]) }}">
                                             @endif
                                             <button data-popover-target="popover-pemeliharaan{{$warehouse->id}}" type="button" class="focus:outline-none text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-2 py-2.5 me-2 mb-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800  w-11 h-11">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto w-5" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
