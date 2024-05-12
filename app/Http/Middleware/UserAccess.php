@@ -34,7 +34,7 @@ class UserAccess
                 case 'ekspedisi':
                     return redirect()->route('ekspedisi2.index');
                 default:
-                    return redirect()->route('posts.index');
+                    return redirect()->route('welcome');
             }
         }
     

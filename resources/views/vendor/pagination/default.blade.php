@@ -35,13 +35,13 @@
   <div class="flex-col hidden lg:flex-row sm:flex-1 sm:flex sm:items-center sm:justify-between">
     <div>
       <p class="text-sm leading-5 dark:text-gray-300">
-        {{ __('pagination.showing') }}
+        {{ __('pagination.Menampilkan') }}
         <span class="font-medium">{{ $paginator->firstItem() }}</span>
-        {{ __('pagination.to') }}
+        {{ __('pagination.hingga') }}
         <span class="font-medium">{{ $paginator->lastItem() }}</span>
-        {{ __('pagination.of') }}
+        {{ __('pagination.dari') }}
         <span class="font-medium">{{ $paginator->total() }}</span>
-        {{ __('pagination.results') }}
+        {{ __('pagination.hasil') }}
       </p>
     </div>
 

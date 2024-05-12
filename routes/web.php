@@ -39,22 +39,25 @@ All Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:admin'])->group(function () {
-    //route utama
-
+    
     Route::get('/home', [\App\Http\Controllers\PostController::class, 'index'])->name('home');
+
+    //route utama
     Route::resource('/posts', \App\Http\Controllers\PostController::class);
     Route::post('/posts/tambah', [\App\Http\Controllers\PostController::class, 'tambah'])->name('posts.tambah');
     Route::get('/posts/{no_keputusan_pengadilan}/cetak_bukti', [\App\Http\Controllers\PostController::class, 'cetak_bukti'])->name('posts.cetak_bukti');
 
-    Route::get('/berita_acara/create/{no_keputusan_pengadilan}', [\App\Http\Controllers\BeritaController::class, 'edit'])->name('berita_acara.edit');
+    Route::get('/berita_acara/edit/{no_keputusan_pengadilan}', [\App\Http\Controllers\BeritaController::class, 'edit'])->name('berita_acara.edit');
     Route::post('/berita_acara/create/{no_keputusan_pengadilan}', [\App\Http\Controllers\BeritaController::class, 'create'])->name('berita_acara.create');
     Route::get('/berita_acara/cetak', [BeritaController::class, 'cetak'])->name('berita_acara.cetak');
 
-    Route::get('/surat_jalan/create/{no_keputusan_pengadilan}', [\App\Http\Controllers\SuratJalanController::class, 'edit'])->name('surat_jalan.edit');
+    Route::get('/surat_jalan/edit/{no_keputusan_pengadilan}', [\App\Http\Controllers\SuratJalanController::class, 'edit'])->name('surat_jalan.edit');
     Route::post('/surat_jalan/create/{no_keputusan_pengadilan}', [\App\Http\Controllers\SuratJalanController::class, 'create'])->name('surat_jalan.create');
     Route::get('/surat_jalan/cetak', [SuratJalanController::class, 'cetak'])->name('surat_jalan.cetak');
 
     Route::resource('/warehouse', \App\Http\Controllers\WarehouseController::class);
+    Route::resource('/pemeliharaan', \App\Http\Controllers\PemeliharaanController::class);
+    Route::get('/pemeliharaan/create/{id_barang}', [\App\Http\Controllers\PemeliharaanController::class, 'create'])->name('pemeliharaan.create');
     Route::resource('/users', \App\Http\Controllers\DaftarController::class);
     Route::resource('/ekspedisi', \App\Http\Controllers\EkspedisiController::class);
 });

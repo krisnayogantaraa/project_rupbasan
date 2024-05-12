@@ -37,9 +37,9 @@ class PostController extends Controller
                 ->orWhere('status_pengajuan', 'LIKE', "%$request->search%")
                 ->orWhere('nama', 'LIKE', "%$request->search%")
                 ->orWhere('instansi', 'LIKE', "%$request->search%")
-                ->paginate(1);
+                ->paginate(10);
         } else {
-            $posts = Post::latest()->paginate(1);
+            $posts = Post::latest()->paginate(10);
         }
 
         //get posts

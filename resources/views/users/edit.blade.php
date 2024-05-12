@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<p class="text-5xl mb-3 text-gray-900 dark:text-white mx-auto">Ubah Akun Baru</p>
+<p class="text-5xl mb-3 text-gray-900 dark:text-white mx-auto">Ubah Data Akun</p>
 
 <form action="{{ route('users.update', $User->id) }}" method="POST" enctype="multipart/form-data" class="mx-auto">
     @csrf
