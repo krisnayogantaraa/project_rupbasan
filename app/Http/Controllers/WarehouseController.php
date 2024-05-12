@@ -49,6 +49,7 @@ class WarehouseController extends Controller
         //render view with warehouse
         return view('warehouses.index', compact('warehouses'));
     }
+
     /**
      * create
      *

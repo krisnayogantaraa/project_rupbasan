@@ -23,11 +23,12 @@ use Whoops\Run;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
 
-Route::post('/pengajuan}', [\App\Http\Controllers\pengajuan::class, 'store'])->name('pengajuan.store');
+Route::resource('/', \App\Http\Controllers\HomeController::class);
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/show/{id}', [\App\Http\Controllers\HomeController::class, 'show'])->name('home.show');
+
+Route::post('/pengajuan', [\App\Http\Controllers\pengajuan::class, 'store'])->name('pengajuan.store');
 Route::get('/pengajuan/{no_keputusan_pengadilan}/cetak_bukti}', [\App\Http\Controllers\pengajuan::class, 'cetak'])->name('pengajuan.cetak');
 
 

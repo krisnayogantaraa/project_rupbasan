@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\HomeController;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,7 +35,7 @@ class UserAccess
                 case 'ekspedisi':
                     return redirect()->route('ekspedisi2.index');
                 default:
-                    return redirect()->route('welcome');
+                    return redirect()->route('home.index');
             }
         }
     

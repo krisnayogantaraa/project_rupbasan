@@ -28,7 +28,7 @@ class LoginController extends Controller
             case 'ekspedisi':
                 return redirect()->route('ekspedisi.index');
             default:
-                return redirect()->route('welcome');
+                return redirect()->route('home.index');
         }
     }
 
