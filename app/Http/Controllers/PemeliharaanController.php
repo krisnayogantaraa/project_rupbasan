@@ -131,21 +131,31 @@ class PemeliharaanController extends Controller
     }
 
     /**
-     * cetak_bukti
+     * cetak_laporan
      *
      * @param  mixed $no_keputusan_pengadilan
      * @return View
      */
-    public function cetak_bukti(string $no_keputusan_pengadilan): View
+    public function cetak_laporan(Request $request): View
     {
-        //get post by no_keputusan pengadilan
-        $post = Post::where('no_keputusan_pengadilan', $no_keputusan_pengadilan)->firstOrFail();
+        $awal = $request->start;
+        $akhir = $request->end;
 
-        //get warehouse by no_keputusan pengadilan
-        $warehouses = Warehouse::where('no_keputusan_pengadilan', $post->no_keputusan_pengadilan)->get();
+        $awal = date('d/m/Y', strtotime($awal));
+        $akhir = date('d/m/Y', strtotime($akhir));
+
+        $input_awal = $request->start;
+        $input_akhir = $request->end;
+
+        $input_awal = date('Y-m-d 00:00:00', strtotime($input_awal)); // Jam 00:00:00
+        $input_akhir = date('Y-m-d 23:59:59', strtotime($input_akhir)); // Jam 23:59:59
+
+        $pemeliharaans = Pemeliharaan::whereBetween('tgl_pemeliharaan', [$input_awal, $input_akhir])
+            ->orderBy('tgl_pemeliharaan', 'asc') // Urutkan dari yang paling lama
+            ->get();
 
         //render view
-        return view('pemeliharaan.cetak_bukti', compact('post', 'warehouses'));
+        return view('pemeliharaan.cetak_laporan', compact('pemeliharaans', 'awal', 'akhir'));
     }
 
     /**

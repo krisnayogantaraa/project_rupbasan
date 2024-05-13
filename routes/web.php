@@ -58,6 +58,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::resource('/warehouse', \App\Http\Controllers\WarehouseController::class);
     Route::resource('/pemeliharaan', \App\Http\Controllers\PemeliharaanController::class);
+    Route::get('/cetak_laporan', [\App\Http\Controllers\PemeliharaanController::class, 'cetak_laporan'])->name('pemeliharaan.cetak_laporan');
     Route::get('/pemeliharaan/create/{id_barang}', [\App\Http\Controllers\PemeliharaanController::class, 'create'])->name('pemeliharaan.create');
     Route::resource('/users', \App\Http\Controllers\DaftarController::class);
     Route::resource('/ekspedisi', \App\Http\Controllers\EkspedisiController::class);
